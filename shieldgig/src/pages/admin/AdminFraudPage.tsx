@@ -53,11 +53,20 @@ export const AdminFraudPage: React.FC = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="#1c1f35" />
               <XAxis dataKey="x" name="Fraud Score" stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 11 }} label={{ value: 'Fraud Score', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 11 }} />
               <YAxis dataKey="y" name="Flags" stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 11 }} label={{ value: 'Flags', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }} />
-              <Tooltip
-                cursor={{ strokeDasharray: '3 3' }}
-                contentStyle={{ background: '#0f1023', border: '1px solid #1c1f35', borderRadius: 12, color: '#e2e8f0', fontSize: 12 }}
-                formatter={(v, name) => [v, name === 'x' ? 'Fraud Score' : 'Flags']}
-              />
+             <Tooltip
+  cursor={{ strokeDasharray: '3 3' }}
+  contentStyle={{
+    background: '#0f1023',
+    border: '1px solid #1c1f35',
+    borderRadius: 12,
+    color: '#e2e8f0',
+    fontSize: 12
+  }}
+  formatter={(value, name) => [
+    Number(value ?? 0),
+    name === 'x' ? 'Fraud Score' : 'Flags'
+  ]}
+/>
               <Scatter data={scatterData} name="Claims">
                 {scatterData.map((entry, i) => (
                   <Cell

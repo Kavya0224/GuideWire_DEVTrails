@@ -9,7 +9,15 @@ import {
 import { useAuthStore } from '../../store/authStore';
 import { cn } from '../../lib/utils';
 
-const workerLinks = [
+/* ✅ FIX: Add proper type */
+type LinkType = {
+  to: string;
+  icon: any;
+  label: string;
+  badge?: boolean | number;
+};
+
+const workerLinks: LinkType[] = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/buy-plan', icon: ShieldCheck, label: 'My Plan' },
   { to: '/claims', icon: FileText, label: 'Claims' },
@@ -17,7 +25,7 @@ const workerLinks = [
   { to: '/profile', icon: User, label: 'Profile' },
 ];
 
-const adminLinks = [
+const adminLinks: LinkType[] = [
   { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Overview' },
   { to: '/admin/workers', icon: Users, label: 'Workers' },
   { to: '/admin/claims', icon: FileText, label: 'Claims' },
@@ -72,7 +80,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
         </AnimatePresence>
       </div>
 
-      {/* Collapse toggle */}
+      {/* Toggle */}
       <button
         onClick={() => setCollapsed(!collapsed)}
         className="absolute -right-3.5 top-7 w-7 h-7 bg-surface-600 border border-slate-700 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-600 transition-all z-10"
@@ -80,10 +88,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
         {collapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
       </button>
 
-      {/* Nav links */}
+      {/* Nav */}
       <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto">
         {links.map(({ to, icon: Icon, label, badge }) => {
-          const isActive = location.pathname === to || (to !== '/dashboard' && to !== '/admin/dashboard' && location.pathname.startsWith(to));
+          const isActive =
+            location.pathname === to ||
+            (to !== '/dashboard' &&
+              to !== '/admin/dashboard' &&
+              location.pathname.startsWith(to));
+
           return (
             <NavLink key={to} to={to}>
               <motion.div
@@ -103,6 +116,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
                     </span>
                   )}
                 </div>
+
                 <AnimatePresence>
                   {!collapsed && (
                     <motion.span
@@ -115,6 +129,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
                     </motion.span>
                   )}
                 </AnimatePresence>
+
                 {isActive && (
                   <motion.div
                     layoutId="activeNav"
@@ -127,12 +142,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
         })}
       </nav>
 
-      {/* User footer */}
+      {/* Footer */}
       <div className="border-t border-slate-800/80 p-3">
         <div className={cn('flex items-center gap-3', collapsed && 'justify-center')}>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
             {user?.name?.charAt(0) || 'U'}
           </div>
+
           <AnimatePresence>
             {!collapsed && (
               <motion.div
@@ -146,11 +162,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
               </motion.div>
             )}
           </AnimatePresence>
+
           {!collapsed && (
             <button
               onClick={handleLogout}
               className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors"
-              title="Logout"
             >
               <LogOut className="w-4 h-4" />
             </button>
@@ -160,7 +176,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, setCollapsed }) => 
     </motion.aside>
   );
 };
-
 export const Topbar: React.FC<{ sidebarCollapsed: boolean }> = ({ sidebarCollapsed }) => {
   const { user, unreadCount } = useAuthStore();
   const navigate = useNavigate();
@@ -189,38 +204,14 @@ export const Topbar: React.FC<{ sidebarCollapsed: boolean }> = ({ sidebarCollaps
       className="fixed top-0 right-0 h-16 z-40 glass border-b border-slate-800/80 flex items-center justify-between px-6 transition-all duration-300"
       style={{ left: sidebarCollapsed ? 72 : 240 }}
     >
-      <div>
-        <h1 className="text-lg font-bold text-white">{getPageTitle()}</h1>
-        <p className="text-xs text-slate-500">
-          {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
-        </p>
-      </div>
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-          <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-          <span className="text-xs font-medium text-emerald-400">Systems Operational</span>
-        </div>
-        <button
-          onClick={() => navigate('/notifications')}
-          className="relative p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
-        >
-          <Bell className="w-5 h-5" />
-          {unreadCount > 0 && (
-            <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] font-bold text-white flex items-center justify-center">
-              {unreadCount}
-            </span>
-          )}
-        </button>
-        <div className="flex items-center gap-2 pl-2 border-l border-slate-700">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
-            {user?.name?.charAt(0)}
-          </div>
-          <div className="hidden sm:block">
-            <p className="text-sm font-medium text-white leading-none">{user?.name?.split(' ')[0]}</p>
-            <p className="text-xs text-slate-500 capitalize">{user?.role}</p>
-          </div>
-        </div>
-      </div>
+      <h1 className="text-lg font-bold text-white">{getPageTitle()}</h1>
+
+      <button
+        onClick={() => navigate('/notifications')}
+        className="relative p-2"
+      >
+        {unreadCount > 0 && <span>{unreadCount}</span>}
+      </button>
     </header>
   );
 };

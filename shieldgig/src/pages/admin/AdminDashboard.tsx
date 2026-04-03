@@ -86,7 +86,18 @@ export const AdminDashboard: React.FC = () => {
                 <CartesianGrid strokeDasharray="3 3" stroke="#1c1f35" />
                 <XAxis dataKey="date" stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 12 }} />
                 <YAxis stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 12 }} />
-                <Tooltip contentStyle={{ background: '#0f1023', border: '1px solid #1c1f35', borderRadius: 12, color: '#e2e8f0' }} />
+                <Tooltip
+  contentStyle={{
+    background: '#0f1023',
+    border: '1px solid #1c1f35',
+    borderRadius: 12,
+    color: '#e2e8f0'
+  }}
+  formatter={(value) => [
+    `₹${Number(value ?? 0).toLocaleString()}`,
+    'Revenue'
+  ]}
+/>
                 <Bar dataKey="claims" name="Claims" fill="#6366f1" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="payouts" name="Payouts" fill="#10b981" radius={[4, 4, 0, 0]} />
               </BarChart>
@@ -102,7 +113,18 @@ export const AdminDashboard: React.FC = () => {
                 <Pie data={pieData} cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={3} dataKey="value">
                   {pieData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                 </Pie>
-                <Tooltip contentStyle={{ background: '#0f1023', border: '1px solid #1c1f35', borderRadius: 12, color: '#e2e8f0' }} />
+               <Tooltip
+  contentStyle={{
+    background: '#0f1023',
+    border: '1px solid #1c1f35',
+    borderRadius: 12,
+    color: '#e2e8f0'
+  }}
+  formatter={(value) => [
+    `₹${Number(value ?? 0).toLocaleString()}`,
+    'Revenue'
+  ]}
+/>
                 <Legend wrapperStyle={{ color: '#94a3b8', fontSize: 12 }} />
               </PieChart>
             </ResponsiveContainer>
@@ -128,7 +150,18 @@ export const AdminDashboard: React.FC = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="#1c1f35" />
               <XAxis dataKey="date" stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 12 }} />
               <YAxis stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 12 }} tickFormatter={v => `₹${(v / 1000).toFixed(0)}k`} />
-              <Tooltip contentStyle={{ background: '#0f1023', border: '1px solid #1c1f35', borderRadius: 12, color: '#e2e8f0' }} formatter={(v: number) => [`₹${v.toLocaleString()}`, 'Revenue']} />
+              <Tooltip
+  contentStyle={{
+    background: '#0f1023',
+    border: '1px solid #1c1f35',
+    borderRadius: 12,
+    color: '#e2e8f0'
+  }}
+  formatter={(value) => [
+    `₹${Number(value ?? 0).toLocaleString()}`,
+    'Revenue'
+  ]}
+/>
               <Area type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={2} fill="url(#revenueGrad)" />
             </AreaChart>
           </ResponsiveContainer>

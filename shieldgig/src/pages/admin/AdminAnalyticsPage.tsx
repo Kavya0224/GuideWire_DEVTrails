@@ -70,7 +70,18 @@ export const AdminAnalyticsPage: React.FC = () => {
             <CartesianGrid strokeDasharray="3 3" stroke="#1c1f35" />
             <XAxis dataKey="date" stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 12 }} />
             <YAxis stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 12 }} tickFormatter={v => `₹${(v / 1000).toFixed(0)}k`} />
-            <Tooltip contentStyle={{ background: '#0f1023', border: '1px solid #1c1f35', borderRadius: 12, color: '#e2e8f0' }} formatter={(v: number) => [formatCurrency(v), 'Revenue']} />
+            <Tooltip
+  contentStyle={{
+    background: '#0f1023',
+    border: '1px solid #1c1f35',
+    borderRadius: 12,
+    color: '#e2e8f0'
+  }}
+  formatter={(value) => [
+    `₹${Number(value ?? 0).toLocaleString()}`,
+    'Revenue'
+  ]}
+/>
             <Area type="monotone" dataKey="revenue" stroke="#6366f1" strokeWidth={2.5} fill="url(#revGrad)" />
           </AreaChart>
         </ResponsiveContainer>
@@ -91,7 +102,18 @@ export const AdminAnalyticsPage: React.FC = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="#1c1f35" />
               <XAxis dataKey="date" stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 11 }} />
               <YAxis stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: '#0f1023', border: '1px solid #1c1f35', borderRadius: 12, color: '#e2e8f0' }} />
+              <Tooltip
+  contentStyle={{
+    background: '#0f1023',
+    border: '1px solid #1c1f35',
+    borderRadius: 12,
+    color: '#e2e8f0'
+  }}
+  formatter={(value) => [
+    `₹${Number(value ?? 0).toLocaleString()}`,
+    'Revenue'
+  ]}
+/>
               <Bar dataKey="claims" name="Claims" fill="#6366f1" radius={[4, 4, 0, 0]} />
               <Bar dataKey="payouts" name="Payouts" fill="#10b981" radius={[4, 4, 0, 0]} />
             </BarChart>
@@ -109,7 +131,18 @@ export const AdminAnalyticsPage: React.FC = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="#1c1f35" />
               <XAxis dataKey="date" stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 11 }} />
               <YAxis stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 11 }} tickFormatter={v => `${(v / 1000).toFixed(1)}k`} />
-              <Tooltip contentStyle={{ background: '#0f1023', border: '1px solid #1c1f35', borderRadius: 12, color: '#e2e8f0' }} />
+<Tooltip
+  contentStyle={{
+    background: '#0f1023',
+    border: '1px solid #1c1f35',
+    borderRadius: 12,
+    color: '#e2e8f0'
+  }}
+  formatter={(value) => [
+    `₹${Number(value ?? 0).toLocaleString()}`,
+    'Revenue'
+  ]}
+/>
               <Line type="monotone" dataKey="activeWorkers" name="Active Workers" stroke="#a78bfa" strokeWidth={2.5} dot={{ fill: '#a78bfa', r: 4 }} activeDot={{ r: 6 }} />
             </LineChart>
           </ResponsiveContainer>

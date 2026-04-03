@@ -156,7 +156,7 @@ export const WorkerDashboard: React.FC = () => {
                 <YAxis stroke="#475569" tick={{ fill: '#94a3b8', fontSize: 12 }} tickFormatter={v => `₹${v}`} />
                 <Tooltip
                   contentStyle={{ background: '#0f1023', border: '1px solid #1c1f35', borderRadius: 12, color: '#e2e8f0' }}
-                  formatter={(v: number) => [`₹${v}`, 'Earnings']}
+                  formatter={(v) => [`₹${String(v)}`, 'Earnings']}
                 />
                 <Area type="monotone" dataKey="amount" stroke="#6366f1" strokeWidth={2} fill="url(#earningsGrad)" />
               </AreaChart>
